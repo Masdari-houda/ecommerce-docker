@@ -5,6 +5,9 @@
 /tmp
 /out-tsc
 /bazel-out
+# Ignore Docker images
+*.tar
+
 
 # Node
 /node_modules
