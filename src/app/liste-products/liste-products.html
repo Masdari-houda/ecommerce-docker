@@ -1,0 +1,106 @@
+<div class="container-fluid py-5 mt-5">
+
+  <!-- Message de confirmation -->
+  <div *ngIf="message" class="alert alert-success position-fixed top-0 start-50 translate-middle-x mt-3 text-center" style="z-index: 1050; min-width: 300px;">
+    {{ message }}
+  </div>
+
+  <h2 class="mb-5 fw-bold text-center">Nos Produits</h2>
+
+  <!-- Message d'erreur -->
+  <div class="text-center py-5 my-5" *ngIf="errorMessage">
+    <h4 class="text-danger">{{ errorMessage }}</h4>
+  </div>
+
+  <!-- Loader pendant le chargement -->
+  <div class="text-center py-5 my-5" *ngIf="isLoading && !errorMessage">
+    <h4 class="text-muted">Chargement des produits...</h4>
+  </div>
+
+  <!-- Liste des produits -->
+  <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4" *ngIf="!isLoading && !errorMessage && products.length > 0">
+    <div class="col" *ngFor="let p of paginatedProducts; trackBy: trackById">
+      <app-product-card 
+        [product]="p" 
+        (addToCart)="onAddToCart($event)" 
+        (select)="onProductSelected($event)">
+      </app-product-card>
+    </div>
+  </div>
+
+  <!-- Section pagination + infos + choix par page -->
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-5 gap-4" *ngIf="!isLoading && !errorMessage && products.length > 0">
+
+    <!-- Infos affichage -->
+    <div class="text-muted small">
+      Affichage <strong>{{ products.length ? ((currentPage - 1) * itemsPerPage + 1) : 0 }}</strong> -
+      <strong>{{ endIndex }}</strong> sur <strong>{{ products.length }}</strong> produits
+    </div>
+
+    <!-- Contrôles -->
+    <div class="d-flex align-items-center gap-4 flex-wrap justify-content-center">
+
+      <!-- Sélecteur nb produits par page -->
+      <div>
+        <select [value]="itemsPerPage" class="form-select form-select-sm" 
+                (change)="setItemsPerPage($any($event.target).value)">
+          <option [value]="8">8 par page</option>
+          <option [value]="12">12 par page</option>
+          <option [value]="24">24 par page</option>
+          <option [value]="48">48 par page</option>
+        </select>
+      </div>
+
+      <!-- Pagination -->
+      <nav *ngIf="totalPages > 1" aria-label="Pagination des produits">
+        <ul class="pagination mb-0">
+
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button class="page-link" (click)="prevPage()" aria-label="Précédent">
+              « Préc
+            </button>
+          </li>
+
+          <ng-container *ngFor="let page of visiblePages">
+            <li class="page-item" *ngIf="typeof page === 'number'" 
+                [class.active]="page === currentPage">
+              <button class="page-link" (click)="goToPage(page)">
+                {{ page }}
+              </button>
+            </li>
+            <li class="page-item disabled" *ngIf="typeof page === 'string'">
+              <span class="page-link">...</span>
+            </li>
+          </ng-container>
+
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button class="page-link" (click)="nextPage()" aria-label="Suivant">
+              Suiv »
+            </button>
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Aucun produit -->
+  <div class="text-center py-5 my-5" *ngIf="!isLoading && !errorMessage && products.length === 0">
+    <h4 class="text-muted">Aucun produit trouvé...</h4>
+    <p class="text-muted">Essayez de modifier vos filtres</p>
+  </div>
+
+  <!-- Indicateur de page -->
+  <div class="text-center small text-muted mt-3" *ngIf="!isLoading && !errorMessage && products.length > 0">
+    Page <strong>{{ currentPage }}</strong> sur <strong>{{ totalPages }}</strong>
+  </div>
+
+  <!-- Détails produit (modal-like) -->
+  <app-product-details 
+    *ngIf="selectedProduct" 
+    [product]="selectedProduct" 
+    (close)="closeDetails()"
+    (add)="onAddToCart($event)">
+  </app-product-details>
+
+</div>

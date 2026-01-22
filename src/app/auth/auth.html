@@ -1,0 +1,37 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-3" style="max-width:360px; width:100%;">
+    <h5 class="mb-3 text-center">Se connecter / S'inscrire</h5>
+
+    <div *ngIf="(user$ | async) as user; else loginForm">
+      <p class="text-center">Connecté en tant que <strong>{{ user?.email }}</strong></p>
+      <button class="btn btn-outline-secondary w-100" (click)="logout()">Se déconnecter</button>
+    </div>
+
+    <ng-template #loginForm>
+      <form [formGroup]="authForm" >
+        <div class="mb-2">
+          <label class="form-label">Email</label>
+          <input class="form-control" type="email" formControlName="email">
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Mot de passe</label>
+          <input class="form-control" type="password" formControlName="password">
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary flex-fill" (click)="login()">Se connecter</button>
+          <button class="btn btn-outline-primary flex-fill" (click)="signup()">S'inscrire</button>
+        </div>
+        <div *ngIf="authForm.controls['email'].invalid && (authForm.controls['email'].dirty || authForm.controls['email'].touched)" class="text-danger mt-1">
+          Email invalide.
+        </div>
+
+      </form>
+    </ng-template>
+  </div>
+</div>

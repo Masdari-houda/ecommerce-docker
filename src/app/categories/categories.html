@@ -1,0 +1,26 @@
+<div style="width: 280px; min-height: 100vh; position: sticky; top: 0;">
+  <div class="p-4">
+    <h6 class="fw-bold mb-4 d-flex justify-content-between align-items-center">
+      Catégories
+      <button *ngIf="selectedCategory" class="btn btn-sm btn-outline-light" (click)="clearCategory()">
+        Tout
+      </button>
+    </h6>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item border-0 py-2">
+        <a href="javascript:void(0)" class="text-decoration-none fw-bold" (click)="clearCategory()"
+          [class.active-cat]="!selectedCategory">
+          Toutes les catégories
+        </a>
+      </li>
+
+      <li class="list-group-item border-0 py-2" *ngFor="let cat of categories">
+        <a href="javascript:void(0)" class="text-decoration-none" [class.active-cat]="selectedCategory === cat"
+          (click)="selectCategory(cat)">
+          {{ cat | titlecase }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

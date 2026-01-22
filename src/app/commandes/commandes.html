@@ -1,0 +1,74 @@
+<div class="container-fluid py-5 mt-5">
+  <div class="container">
+
+    <h2 class="text-center">Mes commandes</h2>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner-border text-warning mb-3" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p>Chargement de vos commandes...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && commandes.length === 0" class="empty-state">
+      <i class="bi bi-box-seam empty-state-icon"></i>
+      <p class="mb-3">Vous n'avez passé aucune commande pour le moment.</p>
+      <a routerLink="/liste-products" class="btn btn-outline-dark rounded-pill px-4">Commencer vos achats</a>
+    </div>
+
+    <!-- Orders Grid -->
+    <div *ngIf="!loading && commandes.length > 0">
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+        <div class="col" *ngFor="let cmd of commandes">
+
+          <div class="card">
+
+            <div class="card-header">
+              <span class="order-id">#{{ cmd.id }}</span>
+              <span class="status-badge" [ngClass]="{
+                      'pending': cmd.statut === 'EN_ATTENTE',
+                      'validated': cmd.statut === 'CONFIRMEE',
+                      'shipped': cmd.statut === 'EXPEDIEE'
+                    }">
+                {{ cmd.statut || 'En attente' }}
+              </span>
+            </div>
+
+            <div class="card-body">
+              <div class="info-group">
+                <i class="bi bi-geo-alt-fill"></i>
+                <div>
+                  <div class="fw-bold">{{ cmd.prenom }} {{ cmd.nom }}</div>
+                  <div>{{ cmd.adresse }}</div>
+                  <div class="text-muted small">{{ cmd.codePostal }} {{ cmd.ville }}</div>
+                </div>
+              </div>
+
+              <div class="products-list">
+                <h6>Articles</h6>
+                <div *ngFor="let item of cmd.items" class="product-item">
+                  <span class="product-name text-truncate" style="max-width: 180px;">{{ item.product.name }} <span
+                      class="text-muted">x{{ item.quantity }}</span></span>
+                  <span class="product-price">{{ item.price | number:'1.2-2' }} dh</span>
+                </div>
+              </div>
+
+              <div class="total-row">
+                <span class="total-label">Total commande</span>
+                <span class="total-amount">{{ cmd.total | number:'1.2-2' }} <span
+                    style="font-size: 0.8em">dh</span></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

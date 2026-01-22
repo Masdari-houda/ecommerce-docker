@@ -1,0 +1,32 @@
+<nav class="navbar navbar-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="#">
+      <img src="https://tse1.mm.bing.net/th/id/OIP.PvsPcVsSoMA4CJOhNOn5iAHaDf?rs=1&pid=ImgDetMain&o=7&rm=3" alt="emi"
+        width="80" class="me-3">
+      EMISHOP
+    </a>
+
+    <app-search-bar class="mx-auto bg-white rounded shadow" style="width: 600px;" (search)="onGlobalSearch($event)">
+    </app-search-bar>
+
+    <div class="d-flex align-items-center gap-4">
+      <a routerLink="/liste-products" class="btn btn-outline-light position-relative border-0">
+        <i class="bi bi-house fs-4"></i>
+      </a>
+      <a routerLink="/commandes" class="btn btn-outline-light position-relative border-0">
+        <i class="bi bi-bag-check fs-4"></i>
+      </a>
+      <a routerLink="/panier" class="btn btn-outline-light position-relative border-0">
+        <i class="bi bi-cart3 fs-4"></i>
+        <span *ngIf="cartCount > 0"
+          class="position-absolute top-0 start-87 translate-middle badge rounded-pill bg-danger">
+          {{ cartCount }}
+        </span>
+      </a>
+      <a routerLink="/auth" class="btn btn-outline-light position-relative border-0" title="Connexion">
+        <i class="bi bi-person fs-4"></i>
+      </a>
+
+    </div>
+  </div>
+</nav>

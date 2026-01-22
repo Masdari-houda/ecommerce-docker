@@ -1,0 +1,164 @@
+/* commandes.css */
+
+:host {
+  display: block;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  width: 100%;
+}
+
+h2 {
+  color: #1e293b;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 2rem;
+}
+
+/* Loading & Empty States */
+.loading-state,
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  color: #64748b;
+  font-size: 1.1rem;
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  color: #e2e8f0;
+  margin-bottom: 1rem;
+}
+
+/* Card Styling */
+.card {
+  background: white;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.card-header {
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-id {
+  font-weight: 700;
+  color: #1e293b;
+  font-family: 'Courier New', monospace;
+  background: #f1f5f9;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 0.35rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.pending {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.status-badge.validated {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.status-badge.shipped {
+  background-color: #e0f2fe;
+  color: #0284c7;
+}
+
+/* Card Body */
+.card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.info-group {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #334155;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.info-group i {
+  color: #94a3b8;
+  margin-top: 3px;
+}
+
+.products-list {
+  margin-top: auto;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 1rem;
+}
+
+.products-list h6 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.product-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #475569;
+}
+
+.product-name {
+  font-weight: 500;
+}
+
+.product-price {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.total-row {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-label {
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.total-amount {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #f59e0b;
+}

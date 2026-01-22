@@ -1,0 +1,18 @@
+/* Shell layout to keep footer at bottom when content is short */
+:host {
+  display: block;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+/* Ensure main area grows and footer stays at bottom */
+.app-shell > .d-flex.flex-grow-1 {
+  flex: 1 1 auto;
+}
+
+/* small responsive tweak for categories + products area */
+@media (max-width: 768px) {
+  .app-shell .d-flex.w-100 { flex-direction: column; }
+}

@@ -1,0 +1,15 @@
+<!-- app.component.html -->
+<ng-container *ngIf="showLayout">
+  <div class="app-shell d-flex flex-column min-vh-100">
+    <app-header></app-header>
+
+    <div class="d-flex w-100 flex-grow-1">
+      <app-categories></app-categories>
+      <router-outlet></router-outlet>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+</ng-container>
+
+<router-outlet *ngIf="!showLayout"></router-outlet>

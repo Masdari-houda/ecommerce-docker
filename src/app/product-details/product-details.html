@@ -1,0 +1,81 @@
+<div *ngIf="!isRouteView && product" class="pd-overlay" (click)="onClose()">
+  <div class="pd-modal" (click)="$event.stopPropagation()" role="dialog" aria-modal="true">
+    <div class="pd-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">{{ product?.name || product?.title }}</h5>
+      <button class="btn-close" aria-label="Fermer" (click)="onClose()"></button>
+    </div>
+
+    <div class="pd-body">
+      <div class="d-flex gap-3 mb-4">
+        <img [src]="product?.img || product?.thumbnail || 'https://via.placeholder.com/300x300?text=Image'"
+             alt="{{ product?.name || product?.title }}"
+             style="width:180px; height:180px; object-fit:contain; background:white; padding:8px">
+
+        <div class="flex-grow-1">
+          <p *ngIf="product?.brand" class="mb-1"><strong>Marque:</strong> {{ product?.brand }}</p>
+          <p *ngIf="product?.category" class="mb-1"><strong>Catégorie:</strong> {{ product?.category }}</p>
+          <p *ngIf="product?.description" class="mb-1 small text-muted text-truncate-2"><strong>Description:</strong> {{ product?.description }}</p>
+          <p class="mb-2"><strong>Prix:</strong> {{ ((product?.price ?? 0) * 10) | number:'1.2-2' }} dh</p>
+
+          <div class="d-flex gap-2">
+            <button class="btn btn-warning btn-sm" [disabled]="(product.stock ?? 0) <= 0" (click)="onAddToCart();">Ajouter au panier</button>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngTemplateOutlet="commentSection"></ng-container>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isRouteView && product" class="container py-5 mt-5">
+  <div *ngIf="message" class="alert alert-success" role="alert">{{ message }}</div>
+  
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <img [src]="product?.img || product?.thumbnail || 'https://via.placeholder.com/400x400?text=Image'"
+           alt="{{ product?.name || product?.title }}"
+           class="img-fluid rounded bg-white p-3 shadow-sm" />
+    </div>
+    <div class="col-md-8">
+      <h2>{{ product?.name || product?.title }}</h2>
+      <p *ngIf="product?.brand"><strong>Marque:</strong> {{ product?.brand }}</p>
+      <p *ngIf="product?.category"><strong>Catégorie:</strong> {{ product?.category }}</p>
+      <p *ngIf="product?.description"><strong>Description:</strong> {{ product?.description }}</p>
+      <p *ngIf="product?.stock !== undefined"><strong>Stock:</strong> {{ product?.stock }}</p>
+      <p class="h4 text-danger mb-3">{{ ((product?.price ?? 0) * 10) | number:'1.2-2' }} dh</p>
+
+      <div class="d-flex gap-2 mb-5">
+        <button class="btn btn-outline-secondary" (click)="goBack()">Retour</button>
+        <button class="btn btn-warning fw-bold" [disabled]="(product.stock ?? 0) <= 0" (click)="onAddToCart();">Ajouter au panier</button>
+      </div>
+
+      <ng-container *ngTemplateOutlet="commentSection"></ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #commentSection>
+  <div class="comment-area mt-4 border-top pt-4">
+    <h5 class="mb-3">Avis des clients ({{ comments.length }})</h5>
+
+    <div class="mb-4">
+      <textarea class="form-control mb-2" rows="2" [(ngModel)]="newComment" placeholder="Ajouter un commentaire..."></textarea>
+      <button class="btn btn-dark btn-sm" (click)="postComment()">Publier</button>
+    </div>
+
+    <div class="comments-list" style="max-height: 300px; overflow-y: auto;">
+      <div *ngFor="let c of comments" class="bg-light p-2 rounded mb-2 border-start border-warning border-4">
+        <div class="d-flex justify-content-between">
+          <span class="small fw-bold">{{ c.userName }}</span>
+          <span class="text-muted" style="font-size: 10px;">{{ formatDate(c.createdAt) }}</span>
+        </div>
+        <p class="mb-0 small">{{ c.text }}</p>
+      </div>
+      
+      <div *ngIf="comments.length === 0" class="text-muted small text-center py-3">
+        Soyez le premier à donner votre avis !
+      </div>
+    </div>
+  </div>
+</ng-template>

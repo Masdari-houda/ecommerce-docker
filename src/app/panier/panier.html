@@ -1,0 +1,49 @@
+<div class="container-fluid py-5 mt-5 px-4">
+
+  <h2 class="mb-4">Mon Panier</h2>
+
+  <div class="table-responsive">
+    <table class="table table-striped w-100">
+      <thead>
+        <tr>
+          <th>Produit</th>
+          <th>Quantité</th>
+          <th>Prix unitaire</th>
+          <th>Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of panier; let i = index">
+          <td>{{ p.produit.name || p.produit.title }}</td>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-sm btn-outline-secondary"
+                (click)="updateQuantity(p.produit.id, p.quantity - 1)">-</button>
+              <span>{{ p.quantity }}</span>
+              <button class="btn btn-sm btn-outline-secondary"
+                (click)="updateQuantity(p.produit.id, p.quantity + 1)">+</button>
+            </div>
+          </td>
+          <td>{{ p.price | number:'1.2-2' }} dh</td>
+          <td>{{ getTotal(p) |number:'1.2-2'}} dh</td>
+          <td>
+            <button class="btn btn-sm btn-danger" (click)="removeProduct(p.produit.id)">
+              Supprimer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-end fw-bold mt-3 mb-4">
+    <div class="text-center mt-4"></div>
+    <div class="fs-5 mb-3">Total du panier : {{ getTotalPanier() | number:'1.2-2' }} dh</div>
+    <div class="text-center mt-4">
+      <button class="btn btn-success btn-lg" (click)="validerCommande()" [disabled]="panier.length === 0">
+        <i class="bi bi-check-circle"></i> Valider la commande
+      </button>
+    </div>
+  </div>
+</div>
